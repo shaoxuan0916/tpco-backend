@@ -23,8 +23,7 @@ try {
 
 // CORS when consuming Medusa from admin
 const ADMIN_CORS =
-  process.env.ADMIN_CORS ||
-  "http://localhost:7000,http://localhost:7001,https://tpco-admin-backend.vercel.app";
+  process.env.ADMIN_CORS || "http://localhost:7000,http://localhost:7001";
 
 // CORS to avoid issues when consuming Medusa from a client
 const STORE_CORS = process.env.STORE_CORS || "http://localhost:8000";
@@ -49,8 +48,6 @@ const plugins = [
     /** @type {import('@medusajs/admin').PluginOptions} */
     options: {
       autoRebuild: true,
-      path: "/app",
-      backend: "https://tpco-backend-production.up.railway.app/",
       develop: {
         open: process.env.OPEN_BROWSER !== "false",
       },
@@ -72,36 +69,21 @@ const plugins = [
       enableUI: true,
     },
   },
-  // AWS S3 Storage (backup solution)
-  // {
-  //   resolve: `medusa-file-s3`,
-  //   options: {
-  //     s3_url: process.env.S3_URL,
-  //     bucket: process.env.S3_BUCKET,
-  //     region: process.env.S3_REGION,
-  //     access_key_id: process.env.S3_ACCESS_KEY_ID,
-  //     secret_access_key: process.env.S3_SECRET_ACCESS_KEY,
-  //     cache_control: process.env.S3_CACHE_CONTROL,
-  //     // optional
-  //     download_file_duration: process.env.S3_DOWNLOAD_FILE_DURATION,
-  //     prefix: process.env.S3_PREFIX,
-  //   },
-  // },
 ];
 
 const modules = {
-  /*eventBus: {
-    resolve: "@medusajs/event-bus-redis",
-    options: {
-      redisUrl: REDIS_URL
-    }
-  },
-  cacheService: {
-    resolve: "@medusajs/cache-redis",
-    options: {
-      redisUrl: REDIS_URL
-    }
-  },*/
+  // eventBus: {
+  //   resolve: "@medusajs/event-bus-redis",
+  //   options: {
+  //     redisUrl: REDIS_URL,
+  //   },
+  // },
+  // cacheService: {
+  //   resolve: "@medusajs/cache-redis",
+  //   options: {
+  //     redisUrl: REDIS_URL,
+  //   },
+  // },
 };
 
 /** @type {import('@medusajs/medusa').ConfigModule["projectConfig"]} */
@@ -111,8 +93,7 @@ const projectConfig = {
   store_cors: STORE_CORS,
   database_url: DATABASE_URL,
   admin_cors: ADMIN_CORS,
-  // Uncomment the following lines to enable REDIS
-  // redis_url: REDIS_URL
+  // redis_url: REDIS_URL,
 };
 
 /** @type {import('@medusajs/medusa').ConfigModule} */
