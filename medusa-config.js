@@ -32,6 +32,13 @@ const STORE_CORS = process.env.STORE_CORS || "http://localhost:8000";
 const GoogleClientId = process.env.GOOGLE_CLIENT_ID || "";
 const GoogleClientSecret = process.env.GOOGLE_CLIENT_SECRET || "";
 
+// Facebook Auth
+const FacebookClientId = process.env.FACEBOOK_CLIENT_ID || "";
+const FacebookClientSecret = process.env.FACEBOOK_CLIENT_SECRET || "";
+
+// Project URL
+const STORE_URL = process.env.STORE_URL;
+const BACKEND_URL = process.env.BACKEND_URL;
 const DATABASE_URL = process.env.DATABASE_URL;
 
 const REDIS_URL = process.env.REDIS_URL || "redis://localhost:6379";
@@ -52,7 +59,7 @@ const plugins = [
     resolve: "@medusajs/admin",
     /** @type {import('@medusajs/admin').PluginOptions} */
     options: {
-      autoRebuild: true,
+      autoRebuild: false,
       develop: {
         open: process.env.OPEN_BROWSER !== "false",
       },
@@ -87,20 +94,34 @@ const plugins = [
         clientID: GoogleClientId,
         clientSecret: GoogleClientSecret,
         store: {
-          // callbackUrl: `${BACKEND_URL}/store/auth/google/cb`,
-          callbackUrl: `$http://localhost:9000/store/auth/google/cb`,
-          // failureRedirect: `${STORE_CORS}/login`,
-          failureRedirect: `http://localhost:8000/account/login`,
-          // The success redirect can be overriden from the client by adding a query param `?redirectTo=your_url` to the auth url
-          // This query param will have the priority over this configuration
-          // successRedirect: `${STORE_CORS}/`,
-          successRedirect: "http://localhost:8000/",
+          callbackUrl: `${BACKEND_URL}/store/auth/google/cb`,
+          failureRedirect: `${STORE_URL}/account`,
+          successRedirect: `${STORE_URL}/account`,
           authPath: "/store/auth/google",
           authCallbackPath: "/store/auth/google/cb",
-          // expiresIn: 24 * 60 * 60 * 1000,
+          expiresIn: 24 * 60 * 60 * 1000,
           // verifyCallback: (container, req, accessToken, refreshToken, profile, strict) => {
           //    // implement your custom verify callback here if you need it
           // },
+        },
+      },
+      {
+        type: "facebook",
+        // strict: "all", // or "none" or "store" or "admin"
+        strict: "none",
+        identifier: "facebook",
+        clientID: FacebookClientId,
+        clientSecret: FacebookClientSecret,
+        store: {
+          callbackUrl: `${BACKEND_URL}/store/auth/facebook/cb`,
+          failureRedirect: `${STORE_URL}/account`,
+          successRedirect: `${STORE_URL}/account`,
+          authPath: "/store/auth/facebook",
+          authCallbackPath: "/store/auth/facebook/cb",
+          expiresIn: 24 * 60 * 60 * 1000,
+          // verifyCallback: (container, req, accessToken, refreshToken, profile, strict) => {
+          //    // implement your custom verify callback here if you need it
+          // }
         },
       },
     ],
