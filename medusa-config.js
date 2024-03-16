@@ -74,13 +74,13 @@ const plugins = [
       bucketName: process.env.BUCKET_NAME,
     },
   },
-  // Handle product variant images
-  {
-    resolve: "medusa-plugin-variant-images",
-    options: {
-      enableUI: true,
-    },
-  },
+  // // Handle product variant images
+  // {
+  //   resolve: "medusa-plugin-variant-images",
+  //   options: {
+  //     enableUI: true,
+  //   },
+  // },
   // Auth Plugin (Social Account)
   {
     resolve: "medusa-plugin-auth",
