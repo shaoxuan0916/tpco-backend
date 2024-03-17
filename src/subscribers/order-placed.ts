@@ -4,8 +4,10 @@ import {
   OrderService,
 } from "@medusajs/medusa";
 
-import express, { Request, Response } from "express";
-import { Resend } from "resend";
+// import express, { Request, Response } from "express";
+// import { Resend } from "resend";
+
+const nodemailer = require("nodemailer");
 
 export default async function handleOrderPlaced({
   data,
@@ -21,33 +23,36 @@ export default async function handleOrderPlaced({
     relations: ["items"],
   });
 
-  const app = express();
-  const resend = new Resend("re_SwsYuVv5_Jqux2wbKqB1LDcosxuUMW6HN");
-
-  console.log("-----resend------", resend);
-
-  await resend.emails.send({
-    from: "shaoxuandev10@gmail.com",
-    to: order.email,
-    subject: "Hello World",
-    html: "<p>Congrats on sending your <strong>first email</strong>!</p>",
+  // ------------- Nodemailer ------------------
+  // Create a transporter using Gmail's SMTP server
+  const transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 587,
+    secure: false, // true for 465, false for other ports
+    auth: {
+      user: "shaoxuandev10@gmail.com", // Your Gmail address
+      pass: "Wsx1029384756", // Your Gmail app password
+    },
   });
 
-  app.get("/", async (req: Request, res: Response) => {
-    const { data, error } = await resend.emails.send({
-      from: "shaoxuandev10@gmail.com",
-      to: [`${order.email}`],
-      subject: "hello world",
-      html: "<strong>it works!</strong>",
-    });
+  // Email options
+  const mailOptions = {
+    from: "shaoxuandev10@gmail.com", // sender address
+    to: `${order.email}`, // list of receivers
+    subject: "Hello world", // Subject line
+    text: "Hello world? nodemailer", // plain text body
+    html: "<b>Hello world? nodemailer</b>", // HTML body
+  };
 
+  // Send the email
+  transporter.sendMail(mailOptions, (error, info) => {
     if (error) {
-      return res.status(400).json({ error });
+      return console.log("nodemailer error", error);
     }
-
-    res.status(200).json({ data });
+    console.log("Message sent: %s", info.messageId);
   });
 
+  // ------------- Sendgrid ------------------
   try {
     await sendGridService.sendEmail({
       templateId: "d-6a5267b599a34291b06288209bdaf1c0",
