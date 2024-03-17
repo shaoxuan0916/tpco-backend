@@ -31,7 +31,7 @@ export default async function handleOrderPlaced({
     secure: false, // true for 465, false for other ports
     auth: {
       user: "shaoxuandev10@gmail.com", // Your Gmail address
-      pass: "Wsx1029384756", // Your Gmail app password
+      pass: "jklw oqkq wzau pxhp", // Your Gmail app password
     },
   });
 
