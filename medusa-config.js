@@ -41,7 +41,7 @@ const STORE_URL = process.env.STORE_URL;
 const BACKEND_URL = process.env.BACKEND_URL;
 const DATABASE_URL = process.env.DATABASE_URL;
 
-const REDIS_URL = process.env.REDIS_URL || "redis://localhost:6379";
+const REDIS_URL = process.env.REDIS_URL;
 
 const plugins = [
   // Fullfillment
@@ -74,13 +74,16 @@ const plugins = [
       bucketName: process.env.BUCKET_NAME,
     },
   },
-  // // Handle product variant images
-  // {
-  //   resolve: "medusa-plugin-variant-images",
-  //   options: {
-  //     enableUI: true,
-  //   },
-  // },
+  // SendGrid Plugin (Send email)
+  {
+    resolve: `medusa-plugin-sendgrid`,
+    options: {
+      api_key: process.env.SENDGRID_API_KEY,
+      from: process.env.SENDGRID_FROM,
+      order_placed_template: process.env.SENDGRID_ORDER_PLACED_ID,
+      order_shipped_template: process.env.SENDGRID_PARCEL_SHIPPED_ID,
+    },
+  },
   // Auth Plugin (Social Account)
   {
     resolve: "medusa-plugin-auth",
@@ -160,9 +163,19 @@ const plugins = [
       },
     },
   },
+  // // Handle product variant images
+  // {
+  //   resolve: "medusa-plugin-variant-images",
+  //   options: {
+  //     enableUI: true,
+  //   },
+  // },
 ];
 
 const modules = {
+  // eventBus: {
+  //   resolve: "@medusajs/event-bus-local",
+  // },
   eventBus: {
     resolve: "@medusajs/event-bus-redis",
     options: {
