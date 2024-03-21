@@ -2,8 +2,14 @@ import { Html, Img } from "@react-email/components";
 import { Order } from "@medusajs/medusa";
 
 export function OrderPlacedEmailer({ order }: { order: Order }) {
-  console.log("customer ---------------->>>>>>", order?.customer);
-  console.log("address ---------------->>>>>>", order?.shipping_address);
+  console.log(
+    "shipping_address ---------------->>>>>>",
+    order?.shipping_address
+  );
+  console.log("order_items ---------------->>>>>>", order?.items);
+  console.log("discount_total ---------------->>>>>>", order?.discount_total);
+  console.log("tax_total ---------------->>>>>>", order?.tax_total);
+  console.log("ORDER TOTAL ---------------->>>>>>", order?.total);
   return (
     <Html lang="en">
       <h2 className="text-[16px] font-bold">
@@ -16,22 +22,32 @@ export function OrderPlacedEmailer({ order }: { order: Order }) {
         </p>
 
         <p className="my-4 text-[12px]">
-          Hi {order?.customer?.first_name} {order?.customer?.last_name},
+          Hi {order?.shipping_address?.first_name}{" "}
+          {order?.shipping_address?.last_name},
         </p>
 
         <p className="text-[12px]">
-          Your order <span className="font-bold">{order?.display_id}</span> has
+          Your order <span className="font-bold">#{order?.display_id}</span> has
           successfully been placed. Please find all the details about your order
           below.
         </p>
 
-        <p className="text-[12px]">Your order will be delievered to : </p>
+        <p className="text-[12px]">Your order will be delievered to: </p>
         <div className="text-[12px]">
-          {order?.shipping_address?.address_1}
-          {order?.shipping_address?.address_2}
-          {order?.shipping_address?.city}
-          {order?.shipping_address?.postal_code}
-          {order?.shipping_address?.country.display_name}
+          <p>{order?.shipping_address?.address_1}</p>
+
+          {order?.shipping_address?.address_2 && (
+            <p>{order?.shipping_address?.address_2}</p>
+          )}
+
+          <p>
+            {order?.shipping_address?.postal_code}{" "}
+            {order?.shipping_address?.city}
+          </p>
+          <div className="flex items-center">
+            <p>{order?.shipping_address?.province} </p>
+            <p className="uppercase">{order?.shipping_address?.country_code}</p>
+          </div>
         </div>
       </div>
 
@@ -51,7 +67,7 @@ export function OrderPlacedEmailer({ order }: { order: Order }) {
             <div className="flex item-center justify-between gap-2">
               <p className="text-[12px]">{item?.title}</p>
               <p className="text-[12px] font-semibold uppercase">
-                {order.currency_code} {item.total}
+                {order?.currency_code} {item?.total}
               </p>
             </div>
           </div>
