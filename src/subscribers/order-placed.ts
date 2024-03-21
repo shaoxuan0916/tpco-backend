@@ -36,6 +36,8 @@ export default async function handleOrderPlaced({
     },
   });
 
+  console.log("order----before send email", order);
+
   const emailHtml = render(OrderPlacedEmailer({ order: order }));
 
   // Email options
