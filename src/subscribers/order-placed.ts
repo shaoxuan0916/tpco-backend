@@ -19,7 +19,7 @@ export default async function handleOrderPlaced({
 
   const order = await orderService.retrieve(data.id, {
     // you can include other relations as well
-    relations: ["items"],
+    relations: ["items", "customer", "shipping_address"],
   });
 
   // ------------- Nodemailer ------------------
@@ -36,7 +36,10 @@ export default async function handleOrderPlaced({
     },
   });
 
-  console.log("order----before send email", order);
+  console.log(
+    "order----before send email ----------------->>>>>>>>>>>>>>>",
+    order
+  );
 
   const emailHtml = render(OrderPlacedEmailer({ order: order }));
 
@@ -44,7 +47,7 @@ export default async function handleOrderPlaced({
   const mailOptions = {
     from: process.env.EMAIL_SEND_FROM, // sender address
     to: `${order.email}`, // list of receivers
-    subject: `Order ${order.id} placed`, // Subject line
+    subject: `Order #${order.display_id} placed`, // Subject line
     html: emailHtml, // HTML body
   };
 
