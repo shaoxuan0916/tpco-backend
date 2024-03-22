@@ -59,7 +59,7 @@ export function OrderPlacedEmailer({ order }: { order: Order }) {
             <div className="w-full">
               {order?.items?.map((item) => (
                 <div className="flex items-center justify-between gap-8 my-4 w-full">
-                  {/* <div className="mr-4">
+                  <div className="mr-4">
                     <Img
                       src={
                         item?.thumbnail ?? "https://via.placeholder.com/80x80"
@@ -68,18 +68,18 @@ export function OrderPlacedEmailer({ order }: { order: Order }) {
                       width="80"
                       height="80"
                     />
-                  </div> */}
+                  </div>
 
-                  {/* <div className="flex item-center justify-between"> */}
-                  <p className="text-[16px]">
-                    {item?.title} x {item?.quantity}
-                  </p>
-                  <p className="text-[16px] font-semibold uppercase">
-                    {order?.currency_code}{" "}
-                    {(item?.unit_price / 100) * item?.quantity}
-                  </p>
+                  <div className="flex item-center justify-between">
+                    <p className="text-[16px]">
+                      {item?.title} x {item?.quantity}
+                    </p>
+                    <p className="text-[16px] font-semibold uppercase">
+                      {order?.currency_code}{" "}
+                      {(item?.unit_price / 100) * item?.quantity}
+                    </p>
+                  </div>
                 </div>
-                // </div>
               ))}
 
               <div className="flex items-center justify-between">
