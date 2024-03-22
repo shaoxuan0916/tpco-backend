@@ -4,11 +4,11 @@ import {
   OrderService,
 } from "@medusajs/medusa";
 import { render } from "@react-email/render";
-import { OrderPlacedEmailer } from "../emailer/OrderPlacedEmailer";
+import { ParcelShippedEmailer } from "../emailer/ParcelShippedEmailer";
 
 const nodemailer = require("nodemailer");
 
-export default async function handleOrderPlaced({
+export default async function handleParcelShipped({
   data,
   eventName,
   container,
@@ -18,15 +18,7 @@ export default async function handleOrderPlaced({
 
   const order = await orderService.retrieve(data.id, {
     // you can include other relations as well
-    relations: [
-      "items",
-      "customer",
-      "shipping_address",
-      "cart",
-      "payments",
-      "discounts",
-    ],
-    select: ["subtotal", "shipping_total", "total", "discount_total"],
+    relations: ["fulfillments", "customer", "shipping_address", "items"],
   });
 
   // ------------- Nodemailer ------------------
@@ -43,13 +35,13 @@ export default async function handleOrderPlaced({
     },
   });
 
-  const emailHtml = render(OrderPlacedEmailer({ order: order }));
+  const emailHtml = render(ParcelShippedEmailer({ order: order }));
 
   // Email options
   const mailOptions = {
     from: process.env.EMAIL_SEND_FROM, // sender address
     to: `${order.email}`, // list of receivers
-    subject: `Order #${order.display_id} Placed | The Parent Company`, // Subject line
+    subject: `Order #${order.display_id} Shipped | The Parent Company`, // Subject line
     html: emailHtml, // HTML body
   };
 
@@ -63,8 +55,8 @@ export default async function handleOrderPlaced({
 }
 
 export const config: SubscriberConfig = {
-  event: OrderService.Events.PLACED,
+  event: OrderService.Events.FULFILLMENT_CREATED,
   context: {
-    subscriberId: "order-placed-handler",
+    subscriberId: "parcel-shipped-handler",
   },
 };

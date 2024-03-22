@@ -38,7 +38,7 @@ export function OrderPlacedEmailer({ order }: { order: Order }) {
               your order below.
             </p>
 
-            <p className="text-[16px] font-semibold my-4">
+            <p className="text-[16px] my-4">
               Once everything is confirmed and ready to ship, we will send you
               another email with the tracking details and any other information
               about your package.
@@ -53,12 +53,12 @@ export function OrderPlacedEmailer({ order }: { order: Order }) {
             </p>
           </div>
 
-          <div className="my-8 px-8">
-            <p className="text-[16px] font-semibold mb-4">Order Summary: </p>
+          <div className="mt-8 mb-2 px-8">
+            <p className="text-[16px] font-semibold mb-8">Order Summary: </p>
 
             <div className="w-full">
               {order?.items?.map((item) => (
-                <div className="flex items-center justify-between gap-8 my-4 w-full">
+                <div className="flex items-center justify-between gap-16 my-4 w-full">
                   <div className="mr-4">
                     <Img
                       src={
@@ -71,7 +71,7 @@ export function OrderPlacedEmailer({ order }: { order: Order }) {
                   </div>
 
                   <div className="flex item-center justify-between">
-                    <p className="text-[16px]">
+                    <p className="text-[16px] mr-16">
                       {item?.title} x {item?.quantity}
                     </p>
                     <p className="text-[16px] font-semibold uppercase">
@@ -82,8 +82,29 @@ export function OrderPlacedEmailer({ order }: { order: Order }) {
                 </div>
               ))}
 
+              <div className="flex items-center justify-between my-1">
+                <p className="text-[16px] font-medium mr-16">Subtotal:</p>
+                <p className="text-[16px] font-semibold uppercase">
+                  {order?.payments[0].currency_code}{" "}
+                  {order?.subtotal / 100 ?? 0}
+                </p>
+              </div>
+              <div className="flex items-center justify-between my-1">
+                <p className="text-[16px] font-medium mr-16">Tax:</p>
+                <p className="text-[16px] font-semibold uppercase">
+                  {order?.payments[0].currency_code}{" "}
+                  {order?.tax_total / 100 ?? 0}
+                </p>
+              </div>
+              <div className="flex items-center justify-between my-1">
+                <p className="text-[16px] font-medium mr-16">Discount:</p>
+                <p className="text-[16px] font-semibold uppercase">
+                  {order?.payments[0].currency_code}{" "}
+                  {order?.discount_total / 100 ?? 0}
+                </p>
+              </div>
               <div className="flex items-center justify-between">
-                <p className="text-[16px] font-medium">Total paid:</p>
+                <p className="text-[16px] font-medium mr-16">Total paid:</p>
                 <p className="text-[16px] font-semibold uppercase">
                   {order?.payments[0].currency_code}{" "}
                   {order?.payments[0].amount / 100}
@@ -94,11 +115,11 @@ export function OrderPlacedEmailer({ order }: { order: Order }) {
 
           <Hr />
 
-          <div className="my-4">
-            <p className="text-[12px] mb-2">
+          <div className="my-4 px-8">
+            <p className="text-[16px] mb-4 font-semibold">
               Your order will be delievered to:{" "}
             </p>
-            <div className="text-[12px]">
+            <div className="text-[16px]">
               <p>{order?.shipping_address?.address_1}</p>
 
               {order?.shipping_address?.address_2 && (
