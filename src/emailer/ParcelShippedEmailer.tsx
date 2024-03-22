@@ -2,7 +2,18 @@ import { Order } from "@medusajs/medusa";
 import { Html, Tailwind, Hr, Img } from "@react-email/components";
 
 export function ParcelShippedEmailer({ order }: { order: Order }) {
-  console.log("fulfillments", order?.fulfillments);
+  console.log("fulfillments", order?.fulfillments[0]?.data);
+  console.log("fulfillments metadata ---->", order?.fulfillments[0]?.metadata);
+
+  const providerName = JSON.parse(
+    // @ts-ignore
+    order?.fulfillments[0]?.metadata ?? "{}"
+  ).name;
+  const trackingNumber = JSON.parse(
+    // @ts-ignore
+    order?.fulfillments[0]?.metadata ?? "{}"
+  ).tracking_number;
+
   return (
     <Html lang="en">
       <Tailwind
@@ -44,19 +55,14 @@ export function ParcelShippedEmailer({ order }: { order: Order }) {
             </p>
           </div>
 
-          <div className="py-4 px-8">
+          <div className="px-8">
             <p className="text-[16px] my-4">
-              Courier company:{" "}
-              <span className="font-bold">
-                {/* @ts-ignore */}
-                {order?.fulfillments[0]?.metadata[0]?.name ?? ""}
-              </span>
+              Courier company:
+              <span className="font-bold">{providerName}</span>
             </p>
             <p className="text-[16px] my-4">
               Tracking number:{" "}
-              <span className="font-bold">
-                {order?.fulfillments[0]?.tracking_numbers}
-              </span>
+              <span className="font-bold">{trackingNumber}</span>
             </p>
           </div>
 
@@ -65,8 +71,8 @@ export function ParcelShippedEmailer({ order }: { order: Order }) {
 
             <div className="w-full">
               {order?.items?.map((item) => (
-                <div className="flex items-center justify-between gap-16 my-4 w-full">
-                  <div className="mr-4">
+                <div className="grid grid-cols-12 gap-4 items-center my-4">
+                  <div className="col-span-2">
                     <Img
                       src={
                         item?.thumbnail ?? "https://via.placeholder.com/80x80"
@@ -76,11 +82,12 @@ export function ParcelShippedEmailer({ order }: { order: Order }) {
                       height="80"
                     />
                   </div>
-
-                  <div className="flex item-center justify-between">
-                    <p className="text-[16px] mr-16">
+                  <div className="col-span-6">
+                    <p className="text-[16px]">
                       {item?.title} x {item?.quantity}
                     </p>
+                  </div>
+                  <div className="col-span-4 text-right">
                     <p className="text-[16px] font-semibold uppercase">
                       {order?.currency_code}{" "}
                       {(item?.unit_price / 100) * item?.quantity}
