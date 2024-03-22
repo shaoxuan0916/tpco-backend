@@ -109,12 +109,13 @@ export function OrderPlacedEmailer({ order }: { order: Order }) {
                 {order?.shipping_address?.postal_code}{" "}
                 {order?.shipping_address?.city}
               </p>
-              <div className="flex items-center">
-                {order?.shipping_address?.province} && (
-                <p>{order?.shipping_address?.province}, </p>)
-                <p className="uppercase">
+              <div>
+                {order?.shipping_address?.province && (
+                  <span>{order?.shipping_address?.province}, </span>
+                )}
+                <span className="uppercase">
                   {order?.shipping_address?.country_code.toUpperCase()}
-                </p>
+                </span>
               </div>
             </div>
           </div>
