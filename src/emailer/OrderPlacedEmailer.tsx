@@ -18,30 +18,18 @@ export function OrderPlacedEmailer({ order }: { order: Order }) {
           },
         }}
       >
-        <div className="mx-auto w-full max-w-[500px]">
-          <h2 className="text-[24px] font-bold py-4 px-8">
+        <div className="mx-auto w-full max-w-[650px]">
+          <h2 className="text-[28px] font-bold py-4 px-8">
             Your order on The Parent Company is confirmed!
           </h2>
 
-          <div className="flex justify-center items-center gap-4 w-full">
-            <Img
-              src="/src/public/tpco-logo.jpg"
-              alt="Item Thumbnail"
-              width="150"
-              height="150"
-              className="rounded-md object-cover"
-            />
-            <h3 className="text-[#ba3660] font-semibold text-[20px]">
-              The Parent Company
-            </h3>
-          </div>
           <div className="py-4 px-8">
-            <p className="my-4 text-[12px]">
+            <p className="my-4 text-[16px]">
               Hi {order?.shipping_address?.first_name}{" "}
               {order?.shipping_address?.last_name},
             </p>
 
-            <p className="text-[12px] my-2">
+            <p className="text-[16px] my-4">
               Your order{" "}
               <span className="font-bold italic text-[#ba3660]">
                 #{order?.display_id}
@@ -50,13 +38,13 @@ export function OrderPlacedEmailer({ order }: { order: Order }) {
               your order below.
             </p>
 
-            <p className="text-[12px] font-semibold my-2">
+            <p className="text-[16px] font-semibold my-4">
               Once everything is confirmed and ready to ship, we will send you
               another email with the tracking details and any other information
               about your package.
             </p>
 
-            <p className="text-[12px] my-2">
+            <p className="text-[16px] my-4">
               In the meantime, if you have any questions, send us an email at{" "}
               <span className="italic font-semibold text-gray-600">
                 theparentcompany.cs@gmail.com
@@ -70,7 +58,7 @@ export function OrderPlacedEmailer({ order }: { order: Order }) {
 
             <div className="w-full">
               {order?.items?.map((item) => (
-                <div className="flex items-center justify-between my-4">
+                <div className="flex items-center justify-between gap-8 my-4 w-full">
                   {/* <div className="mr-4">
                     <Img
                       src={
@@ -83,19 +71,20 @@ export function OrderPlacedEmailer({ order }: { order: Order }) {
                   </div> */}
 
                   {/* <div className="flex item-center justify-between"> */}
-                  <p className="text-[12px] mr-16">
+                  <p className="text-[16px]">
                     {item?.title} x {item?.quantity}
                   </p>
-                  <p className="text-[12px] font-semibold uppercase">
-                    {order?.currency_code} {item?.total}
+                  <p className="text-[16px] font-semibold uppercase">
+                    {order?.currency_code}{" "}
+                    {(item?.unit_price / 100) * item?.quantity}
                   </p>
-                  {/* </div> */}
                 </div>
+                // </div>
               ))}
 
               <div className="flex items-center justify-between">
-                <p className="text-[12px] font-medium">Total paid:</p>
-                <p className="text-[12px] font-semibold uppercase">
+                <p className="text-[16px] font-medium">Total paid:</p>
+                <p className="text-[16px] font-semibold uppercase">
                   {order?.payments[0].currency_code}{" "}
                   {order?.payments[0].amount / 100}
                 </p>
