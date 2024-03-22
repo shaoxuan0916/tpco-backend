@@ -59,8 +59,8 @@ export function OrderPlacedEmailer({ order }: { order: Order }) {
             <div className="w-full">
               <div className="border-b-2 pb-2">
                 {order?.items?.map((item) => (
-                  <div className="grid grid-cols-12 gap-4 items-center my-4">
-                    <div className="col-span-2">
+                  <div className="flex gap-4 items-center my-4">
+                    <div className="">
                       <Img
                         src={
                           item?.thumbnail ?? "https://via.placeholder.com/80x80"
@@ -70,12 +70,12 @@ export function OrderPlacedEmailer({ order }: { order: Order }) {
                         height="80"
                       />
                     </div>
-                    <div className="col-span-6">
+                    <div className="flex-1">
                       <p className="text-[16px]">
                         {item?.title} x {item?.quantity}
                       </p>
                     </div>
-                    <div className="col-span-4 text-right">
+                    <div className="text-right">
                       <p className="text-[16px] font-semibold uppercase">
                         {order?.currency_code}{" "}
                         {(item?.unit_price / 100) * item?.quantity}
@@ -86,45 +86,40 @@ export function OrderPlacedEmailer({ order }: { order: Order }) {
               </div>
 
               {/* Subtotal, Tax, Discount, and Total paid sections */}
-              <div className="grid grid-cols-12 gap-4 mt-4">
-                <div className="col-span-8 text-right">
+              <div className="flex flex-col gap-4 mt-4">
+                <div className="flex items-center gap-4 text-right">
                   <p className="text-[16px] font-medium">Subtotal:</p>
-                </div>
-                <div className="col-span-4 text-right">
                   <p className="text-[16px] font-semibold uppercase">
-                    {(order?.subtotal / 100).toPrecision(2)}
+                    {order?.subtotal / 100 ?? 0}
                   </p>
                 </div>
-                <div className="col-span-8 text-right">
+                <div className="flex items-center gap-4 text-right">
                   <p className="text-[16px] font-medium">Tax:</p>
-                </div>
-                <div className="col-span-4 text-right">
                   <p className="text-[16px] font-semibold uppercase">
-                    {(order?.tax_total / 100).toPrecision(2)}
+                    {(order?.payments[0].amount -
+                      order?.subtotal -
+                      order?.discount_total) /
+                      100 ?? 0}
                   </p>
                 </div>
-                <div className="col-span-8 text-right">
+                <div className="flex items-center gap-4 text-right">
                   <p className="text-[16px] font-medium">Discount:</p>
-                </div>
-                <div className="col-span-4 text-right">
                   <p className="text-[16px] font-semibold uppercase">
-                    {(order?.discount_total / 100).toPrecision(2)}
+                    {order?.discount_total / 100 ?? 0}
                   </p>
                 </div>
-                <div className="col-span-8 text-right">
+                <div className="flex items-center gap-4 text-right">
                   <p className="text-[16px] font-medium">Total paid:</p>
-                </div>
-                <div className="col-span-4 text-right">
                   <p className="text-[16px] font-semibold uppercase">
                     {order?.payments[0].currency_code}{" "}
-                    {(order?.payments[0].amount / 100).toPrecision(2)}
+                    {order?.payments[0].amount / 100 ?? 0}
                   </p>
                 </div>
               </div>
             </div>
           </div>
 
-          <Hr />
+          <Hr className="my-4" />
 
           <div className="my-4 px-8">
             <p className="text-[16px] mb-4 font-semibold">
