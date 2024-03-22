@@ -49,7 +49,7 @@ export default async function handleOrderPlaced({
   const mailOptions = {
     from: process.env.EMAIL_SEND_FROM, // sender address
     to: `${order.email}`, // list of receivers
-    subject: `Order #${order.display_id} placed`, // Subject line
+    subject: `Order #${order.display_id} Placed | The Parent Company`, // Subject line
     html: emailHtml, // HTML body
   };
 
