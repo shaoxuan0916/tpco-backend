@@ -64,10 +64,10 @@ export function ParcelShippedEmailer({ order }: { order: Order }) {
             </p>
           </div>
 
-          <div className="w-full">
+          <div className="w-full max-w-[650px]">
             {order?.items?.map((item) => (
-              <div className="flex justify-between gap-4 items-center my-2">
-                <div>
+              <div className="w-full flex justify-between gap-4 items-center my-2">
+                <div className="flex items-center">
                   {/* Product Image */}
                   <div className="w-[80px] h-[80px] bg-gray-300 mr-4">
                     <Img
@@ -85,7 +85,7 @@ export function ParcelShippedEmailer({ order }: { order: Order }) {
                   </div>
                 </div>
 
-                <div className="text-right">
+                <div className="text-right ml-auto">
                   <p className="text-[16px] font-semibold uppercase">
                     {order?.currency_code}{" "}
                     {((item?.unit_price / 100) * item?.quantity).toFixed(2)}

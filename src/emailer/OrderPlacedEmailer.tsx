@@ -53,73 +53,58 @@ export function OrderPlacedEmailer({ order }: { order: Order }) {
             </p>
           </div>
 
-          <div className="mt-8 mb-2 px-8 w-full">
+          <div className="mt-8 mb-2 px-8 w-full max-w-[650px]">
             <p className="text-[16px] font-semibold mb-8">Order Summary: </p>
 
-            <div className="w-full">
-              <div className="w-full">
-                {order?.items?.map((item) => (
-                  <div className="flex justify-between gap-4 items-center my-2">
-                    <div>
-                      {/* Product Image */}
-                      <div className="w-[80px] h-[80px] bg-gray-300 mr-4">
-                        <Img
-                          src={item?.thumbnail ?? ""}
-                          alt="Item Thumbnail"
-                          width="80"
-                          height="80"
-                        />
-                      </div>
-                      {/* Product name & quantity */}
-                      <div>
-                        <p className="text-[16px]">
-                          {item?.title} x {item?.quantity}
-                        </p>
-                      </div>
+            <div className="w-full max-w-[650px]">
+              {order?.items?.map((item) => (
+                <div className="w-full flex justify-between gap-4 items-center my-2">
+                  <div className="flex items-center">
+                    {/* Product Image */}
+                    <div className="w-[80px] h-[80px] bg-gray-300 mr-4">
+                      <Img
+                        src={item?.thumbnail ?? ""}
+                        alt="Item Thumbnail"
+                        width="80"
+                        height="80"
+                      />
                     </div>
-
-                    <div className="text-right">
-                      <p className="text-[16px] font-semibold uppercase">
-                        {order?.currency_code}{" "}
-                        {((item?.unit_price / 100) * item?.quantity).toFixed(2)}
+                    {/* Product name & quantity */}
+                    <div>
+                      <p className="text-[16px]">
+                        {item?.title} x {item?.quantity}
                       </p>
                     </div>
                   </div>
-                ))}
-              </div>
+
+                  <div className="text-right ml-auto">
+                    <p className="text-[16px] font-semibold uppercase">
+                      {order?.currency_code}{" "}
+                      {((item?.unit_price / 100) * item?.quantity).toFixed(2)}
+                    </p>
+                  </div>
+                </div>
+              ))}
 
               {/* Subtotal, Tax, Discount, and Total paid sections */}
-              <div className="mt-4">
-                <div className="flex items-center gap-4 text-right my-2">
-                  <p className="text-[16px] font-medium">Subtotal:</p>
-                  <p className="text-[16px] font-semibold uppercase">
-                    {(order?.subtotal / 100 ?? 0).toFixed(2)}
-                  </p>
-                </div>
-                <div className="flex items-center gap-4 text-right my-2">
-                  <p className="text-[16px] font-medium">Tax:</p>
-                  <p className="text-[16px] font-semibold uppercase">
-                    {(
-                      (order?.payments[0].amount -
-                        order?.subtotal -
-                        order?.discount_total) /
-                        100 ?? 0
-                    ).toFixed(2)}
-                  </p>
-                </div>
-                <div className="flex items-center gap-4 text-right my-2">
-                  <p className="text-[16px] font-medium">Discount:</p>
-                  <p className="text-[16px] font-semibold uppercase">
-                    {(order?.discount_total / 100 ?? 0).toFixed(2)}
-                  </p>
-                </div>
-                <div className="flex items-center gap-4 text-right my-2">
-                  <p className="text-[16px] font-medium">Total paid:</p>
-                  <p className="text-[16px] font-semibold uppercase">
-                    {order?.payments[0].currency_code}{" "}
-                    {(order?.payments[0].amount / 100 ?? 0).toFixed(2)}
-                  </p>
-                </div>
+              <div className="text-[16px] font-medium ml-auto text-right">
+                Subtotal: {(order?.subtotal / 100 ?? 0).toFixed(2)}
+              </div>
+              <div className="text-[16px] font-medium ml-auto text-right">
+                Tax:{" "}
+                {(
+                  (order?.payments[0].amount -
+                    order?.subtotal -
+                    order?.discount_total) /
+                    100 ?? 0
+                ).toFixed(2)}
+              </div>
+              <div className="text-[16px] font-medium ml-auto text-right">
+                Discount: {(order?.discount_total / 100 ?? 0).toFixed(2)}
+              </div>
+              <div className="text-[16px] font-medium ml-auto text-right">
+                Total paid: {order?.payments[0].currency_code}{" "}
+                {(order?.payments[0].amount / 100 ?? 0).toFixed(2)}
               </div>
             </div>
           </div>
