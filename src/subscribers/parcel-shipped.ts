@@ -55,7 +55,8 @@ export default async function handleParcelShipped({
 }
 
 export const config: SubscriberConfig = {
-  event: OrderService.Events.FULFILLMENT_CREATED,
+  // event: OrderService.Events.FULFILLMENT_CREATED,
+  event: OrderService.Events.SHIPMENT_CREATED,
   context: {
     subscriberId: "parcel-shipped-handler",
   },
