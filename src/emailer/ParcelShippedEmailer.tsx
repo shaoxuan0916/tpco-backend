@@ -5,17 +5,6 @@ export function ParcelShippedEmailer({ order }: { order: Order }) {
   console.log("fulfillments", order?.fulfillments[0]?.data);
   console.log("fulfillments metadata ---->", order?.fulfillments[0]?.metadata);
 
-  // const providerName = JSON.parse(
-  //   // @ts-ignore
-  //   order?.fulfillments[0]?.metadata
-  // ).name;
-  // const trackingNumber = JSON.parse(
-  //   // @ts-ignore
-  //   order?.fulfillments[0]?.metadata
-  // ).tracking_number;
-
-  // console.log("----->>>>>>>>", providerName, trackingNumber);
-
   return (
     <Html lang="en">
       <Tailwind
@@ -75,36 +64,35 @@ export function ParcelShippedEmailer({ order }: { order: Order }) {
             </p>
           </div>
 
-          <div className="mt-8 mb-2 px-8">
-            <p className="text-[16px] font-semibold mb-8">Order Summary: </p>
-
-            <div className="w-full">
-              {order?.items?.map((item) => (
-                <div className="flex gap-4 items-center my-4">
-                  <div className="col-span-2">
+          <div className="w-full">
+            {order?.items?.map((item) => (
+              <div className="flex justify-between gap-4 items-center my-2">
+                <div>
+                  {/* Product Image */}
+                  <div className="w-[80px] h-[80px] bg-gray-300 mr-4">
                     <Img
-                      src={
-                        item?.thumbnail ?? "https://via.placeholder.com/80x80"
-                      }
+                      src={item?.thumbnail ?? ""}
                       alt="Item Thumbnail"
                       width="80"
                       height="80"
                     />
                   </div>
-                  <div className="flex-1">
+                  {/* Product name & quantity */}
+                  <div>
                     <p className="text-[16px]">
                       {item?.title} x {item?.quantity}
                     </p>
                   </div>
-                  <div className="text-right">
-                    <p className="text-[16px] font-semibold uppercase">
-                      {order?.currency_code}{" "}
-                      {(item?.unit_price / 100) * item?.quantity}
-                    </p>
-                  </div>
                 </div>
-              ))}
-            </div>
+
+                <div className="text-right">
+                  <p className="text-[16px] font-semibold uppercase">
+                    {order?.currency_code}{" "}
+                    {((item?.unit_price / 100) * item?.quantity).toFixed(2)}
+                  </p>
+                </div>
+              </div>
+            ))}
           </div>
 
           <Hr className="my-4" />
