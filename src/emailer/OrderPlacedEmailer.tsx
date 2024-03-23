@@ -102,9 +102,12 @@ export function OrderPlacedEmailer({ order }: { order: Order }) {
                 <p className="ml-auto">
                   Discount: {(order?.discount_total / 100 ?? 0).toFixed(2)}
                 </p>
-                <p className="ml-auto">
-                  Total paid: {order?.payments[0].currency_code}{" "}
-                  {(order?.payments[0].amount / 100 ?? 0).toFixed(2)}
+                <p className="ml-auto font-semibold">
+                  Total paid:{" "}
+                  <span className="uppercase">
+                    {order?.payments[0].currency_code}
+                    {(order?.payments[0].amount / 100 ?? 0).toFixed(2)}
+                  </span>{" "}
                 </p>
               </div>
             </div>
