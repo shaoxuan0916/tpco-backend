@@ -86,14 +86,15 @@ export function OrderPlacedEmailer({ order }: { order: Order }) {
               ))}
 
               {/* Subtotal, Tax, Discount, and Total paid sections */}
-              <div className="flex items-center text-[16px] font-medium ml-auto text-right uppercase">
-                <p className="text-right">Subtotal:</p>
+
+              <div className="w-full max-w-[650px] text-[16px] font-medium ml-auto uppercase">
+                Subtotal:
                 <p className="w-[100px] text-right">
                   {(order?.subtotal / 100 ?? 0).toFixed(2)}
                 </p>
               </div>
-              <div className="flex items-center text-[16px] font-medium ml-auto text-right uppercase">
-                <p className="text-right">Tax:</p>
+              <div className="w-full max-w-[650px] text-[16px] font-medium ml-auto uppercase">
+                Tax:
                 <p className="w-[100px] text-right">
                   {(
                     (order?.payments[0].amount -
@@ -103,18 +104,18 @@ export function OrderPlacedEmailer({ order }: { order: Order }) {
                   ).toFixed(2)}
                 </p>
               </div>
-              <div className="flex items-center text-[16px] font-medium ml-auto text-right uppercase">
-                <p className="text-right">Discount:</p>
+              <div className="w-full max-w-[650px] text-[16px] font-medium ml-auto uppercase">
+                Discount:
                 <p className="w-[100px] text-right">
                   {(order?.discount_total / 100 ?? 0).toFixed(2)}
                 </p>
               </div>
-              <div className="flex items-center text-[16px] font-semibold ml-auto text-right uppercase">
-                <p className="text-right">Total paid:</p>
+              <div className="w-full max-w-[650px] text-[16px] font-semibold ml-auto uppercase">
+                Total paid:
                 <p className="w-[100px] text-right">
                   {order?.payments[0].currency_code}{" "}
+                  {(order?.payments[0].amount / 100 ?? 0).toFixed(2)}
                 </p>
-                {(order?.payments[0].amount / 100 ?? 0).toFixed(2)}
               </div>
             </div>
           </div>

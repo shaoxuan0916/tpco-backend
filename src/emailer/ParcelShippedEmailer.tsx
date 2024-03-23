@@ -63,7 +63,7 @@ export function ParcelShippedEmailer({ order }: { order: Order }) {
             </p>
           </div>
 
-          <div className="w-full max-w-[650px] px-8 mt-2">
+          <div className="w-full max-w-[650px] px-8 mt-8">
             <p className="text-[16px] font-semibold mb-8">Order Summary: </p>
             {order?.items?.map((item) => (
               <div className="w-full flex justify-between gap-4 items-center my-2">
