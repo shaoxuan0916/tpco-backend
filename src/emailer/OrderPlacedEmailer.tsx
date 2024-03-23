@@ -87,14 +87,14 @@ export function OrderPlacedEmailer({ order }: { order: Order }) {
 
               {/* Subtotal, Tax, Discount, and Total paid sections */}
 
-              <div className="w-full max-w-[650px] text-[16px] font-medium ml-auto uppercase">
-                Subtotal:
+              <div className="w-full max-w-[650px] text-[16px] font-medium flex justify-between gap-1 items-center">
+                <p className="flex-1 text-right">Subtotal:</p>
                 <p className="w-[100px] text-right">
                   {(order?.subtotal / 100 ?? 0).toFixed(2)}
                 </p>
               </div>
-              <div className="w-full max-w-[650px] text-[16px] font-medium ml-auto uppercase">
-                Tax:
+              <div className="w-full max-w-[650px] text-[16px] font-medium flex justify-between gap-1 items-center">
+                <p className="flex-1 text-right">Tax:</p>
                 <p className="w-[100px] text-right">
                   {(
                     (order?.payments[0].amount -
@@ -104,15 +104,15 @@ export function OrderPlacedEmailer({ order }: { order: Order }) {
                   ).toFixed(2)}
                 </p>
               </div>
-              <div className="w-full max-w-[650px] text-[16px] font-medium ml-auto uppercase">
-                Discount:
+              <div className="w-full max-w-[650px] text-[16px] font-medium flex justify-between gap-1 items-center">
+                <p className="flex-1 text-right">Discount:</p>
                 <p className="w-[100px] text-right">
                   {(order?.discount_total / 100 ?? 0).toFixed(2)}
                 </p>
               </div>
-              <div className="w-full max-w-[650px] text-[16px] font-semibold ml-auto uppercase">
-                Total paid:
-                <p className="w-[100px] text-right">
+              <div className="w-full max-w-[650px] text-[16px] font-semibold flex justify-between gap-1 items-center">
+                <p className="flex-1 text-right">Total paid:</p>
+                <p className="w-[100px] text-right uppercase">
                   {order?.payments[0].currency_code}{" "}
                   {(order?.payments[0].amount / 100 ?? 0).toFixed(2)}
                 </p>
