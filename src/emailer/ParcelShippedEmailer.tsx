@@ -2,8 +2,7 @@ import { Order } from "@medusajs/medusa";
 import { Html, Tailwind, Hr, Img } from "@react-email/components";
 
 export function ParcelShippedEmailer({ order }: { order: Order }) {
-  console.log("fulfillments", order?.fulfillments[0]?.data);
-  console.log("fulfillments metadata ---->", order?.fulfillments[0]?.metadata);
+  // console.log("Fulfillment -->", order?.fulfillments[0]?.data);
 
   return (
     <Html lang="en">
@@ -64,7 +63,8 @@ export function ParcelShippedEmailer({ order }: { order: Order }) {
             </p>
           </div>
 
-          <div className="w-full max-w-[650px]">
+          <div className="w-full max-w-[650px] px-8 mt-2">
+            <p className="text-[16px] font-semibold mb-8">Order Summary: </p>
             {order?.items?.map((item) => (
               <div className="w-full flex justify-between gap-4 items-center my-2">
                 <div className="flex items-center">
@@ -86,7 +86,7 @@ export function ParcelShippedEmailer({ order }: { order: Order }) {
                 </div>
 
                 <div className="text-right ml-auto">
-                  <p className="text-[16px] font-semibold uppercase">
+                  <p className="text-[16px] font-medium uppercase">
                     {order?.currency_code}{" "}
                     {((item?.unit_price / 100) * item?.quantity).toFixed(2)}
                   </p>

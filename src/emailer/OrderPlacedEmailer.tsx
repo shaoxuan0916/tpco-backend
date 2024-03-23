@@ -1,9 +1,8 @@
-import { Tailwind, Html, Img, Row, Hr } from "@react-email/components";
+import { Tailwind, Html, Img, Hr } from "@react-email/components";
 import { Order } from "@medusajs/medusa";
-import { Column } from "typeorm";
 
 export function OrderPlacedEmailer({ order }: { order: Order }) {
-  console.log("ORDER ORDER ORDER", order);
+  // console.log("ORDER -->", order);
 
   return (
     <Html lang="en">
@@ -78,8 +77,8 @@ export function OrderPlacedEmailer({ order }: { order: Order }) {
                   </div>
 
                   <div className="text-right ml-auto">
-                    <p className="text-[16px] font-semibold uppercase">
-                      {order?.currency_code}{" "}
+                    <p className="text-[16px] font-medium uppercase">
+                      {/* {order?.currency_code}{" "} */}
                       {((item?.unit_price / 100) * item?.quantity).toFixed(2)}
                     </p>
                   </div>
@@ -87,23 +86,34 @@ export function OrderPlacedEmailer({ order }: { order: Order }) {
               ))}
 
               {/* Subtotal, Tax, Discount, and Total paid sections */}
-              <div className="text-[16px] font-medium ml-auto text-right">
-                Subtotal: {(order?.subtotal / 100 ?? 0).toFixed(2)}
+              <div className="flex items-center text-[16px] font-medium ml-auto text-right uppercase">
+                <p className="text-right">Subtotal:</p>
+                <p className="w-[100px] text-right">
+                  {(order?.subtotal / 100 ?? 0).toFixed(2)}
+                </p>
               </div>
-              <div className="text-[16px] font-medium ml-auto text-right">
-                Tax:{" "}
-                {(
-                  (order?.payments[0].amount -
-                    order?.subtotal -
-                    order?.discount_total) /
-                    100 ?? 0
-                ).toFixed(2)}
+              <div className="flex items-center text-[16px] font-medium ml-auto text-right uppercase">
+                <p className="text-right">Tax:</p>
+                <p className="w-[100px] text-right">
+                  {(
+                    (order?.payments[0].amount -
+                      order?.subtotal -
+                      order?.discount_total) /
+                      100 ?? 0
+                  ).toFixed(2)}
+                </p>
               </div>
-              <div className="text-[16px] font-medium ml-auto text-right">
-                Discount: {(order?.discount_total / 100 ?? 0).toFixed(2)}
+              <div className="flex items-center text-[16px] font-medium ml-auto text-right uppercase">
+                <p className="text-right">Discount:</p>
+                <p className="w-[100px] text-right">
+                  {(order?.discount_total / 100 ?? 0).toFixed(2)}
+                </p>
               </div>
-              <div className="text-[16px] font-medium ml-auto text-right">
-                Total paid: {order?.payments[0].currency_code}{" "}
+              <div className="flex items-center text-[16px] font-semibold ml-auto text-right uppercase">
+                <p className="text-right">Total paid:</p>
+                <p className="w-[100px] text-right">
+                  {order?.payments[0].currency_code}{" "}
+                </p>
                 {(order?.payments[0].amount / 100 ?? 0).toFixed(2)}
               </div>
             </div>
