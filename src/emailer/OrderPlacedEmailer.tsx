@@ -86,16 +86,12 @@ export function OrderPlacedEmailer({ order }: { order: Order }) {
               ))}
 
               {/* Subtotal, Tax, Discount, and Total paid sections */}
-
-              <div className="w-full max-w-[650px] text-[16px] font-medium flex justify-between gap-1 items-center">
-                <p className="flex-1 text-right">Subtotal:</p>
-                <p className="w-[100px] text-right">
-                  {(order?.subtotal / 100 ?? 0).toFixed(2)}
+              <div className="w-full max-w-[650px] text-[16px] font-medium text-right">
+                <p className="ml-auto">
+                  Subtotal: {(order?.subtotal / 100 ?? 0).toFixed(2)}
                 </p>
-              </div>
-              <div className="w-full max-w-[650px] text-[16px] font-medium flex justify-between gap-1 items-center">
-                <p className="flex-1 text-right">Tax:</p>
-                <p className="w-[100px] text-right">
+                <p className="ml-auto">
+                  Tax total:{" "}
                   {(
                     (order?.payments[0].amount -
                       order?.subtotal -
@@ -103,17 +99,11 @@ export function OrderPlacedEmailer({ order }: { order: Order }) {
                       100 ?? 0
                   ).toFixed(2)}
                 </p>
-              </div>
-              <div className="w-full max-w-[650px] text-[16px] font-medium flex justify-between gap-1 items-center">
-                <p className="flex-1 text-right">Discount:</p>
-                <p className="w-[100px] text-right">
-                  {(order?.discount_total / 100 ?? 0).toFixed(2)}
+                <p className="ml-auto">
+                  Discount: {(order?.discount_total / 100 ?? 0).toFixed(2)}
                 </p>
-              </div>
-              <div className="w-full max-w-[650px] text-[16px] font-semibold flex justify-between gap-1 items-center">
-                <p className="flex-1 text-right">Total paid:</p>
-                <p className="w-[100px] text-right uppercase">
-                  {order?.payments[0].currency_code}{" "}
+                <p className="ml-auto">
+                  Total paid: {order?.payments[0].currency_code}{" "}
                   {(order?.payments[0].amount / 100 ?? 0).toFixed(2)}
                 </p>
               </div>
