@@ -48,6 +48,14 @@ const plugins = [
   `medusa-fulfillment-manual`,
   // Payment
   `medusa-payment-manual`,
+  // Stripe
+  {
+    resolve: `medusa-payment-stripe`,
+    options: {
+      api_key: process.env.STRIPE_API_KEY,
+      webhook_secret: process.env.STRIPE_WEBHOOK_SECRET,
+    },
+  },
   {
     resolve: `@medusajs/file-local`,
     options: {
@@ -65,14 +73,6 @@ const plugins = [
       },
     },
   },
-  // Stripe
-  {
-    resolve: `medusa-payment-stripe`,
-    options: {
-      api_key: process.env.STRIPE_API_KEY,
-      webhook_secret: process.env.STRIPE_WEBHOOK_SECRET,
-    },
-  },
   // Storing products images in supabase storage
   {
     resolve: `medusa-storage-supabase`,
@@ -80,16 +80,6 @@ const plugins = [
       referenceID: process.env.STORAGE_BUCKET_REF,
       serviceKey: process.env.STORAGE_SERVICE_KEY,
       bucketName: process.env.BUCKET_NAME,
-    },
-  },
-  // SendGrid Plugin (Send email)
-  {
-    resolve: `medusa-plugin-sendgrid`,
-    options: {
-      api_key: process.env.SENDGRID_API_KEY,
-      from: process.env.SENDGRID_FROM,
-      order_placed_template: process.env.SENDGRID_ORDER_PLACED_ID,
-      order_shipped_template: process.env.SENDGRID_PARCEL_SHIPPED_ID,
     },
   },
   // Auth Plugin (Social Account)
@@ -124,6 +114,7 @@ const plugins = [
         clientID: FacebookClientId,
         clientSecret: FacebookClientSecret,
         store: {
+          // TODO: add region code on url
           callbackUrl: `${BACKEND_URL}/store/auth/facebook/cb`,
           failureRedirect: `${STORE_URL}/account`,
           successRedirect: `${STORE_URL}/account`,

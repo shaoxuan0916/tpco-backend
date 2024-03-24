@@ -91,11 +91,15 @@ export function OrderPlacedEmailer({ order }: { order: Order }) {
                   Subtotal: {(order?.subtotal / 100 ?? 0).toFixed(2)}
                 </p>
                 <p className="ml-auto">
-                  Tax total:{" "}
+                  Shipping: {(order?.shipping_total / 100 ?? 0).toFixed(2)}
+                </p>
+                <p className="ml-auto">
+                  Taxes:{" "}
                   {(
                     (order?.payments[0].amount -
                       order?.subtotal -
-                      order?.discount_total) /
+                      order?.discount_total -
+                      order?.shipping_total) /
                       100 ?? 0
                   ).toFixed(2)}
                 </p>
@@ -103,9 +107,9 @@ export function OrderPlacedEmailer({ order }: { order: Order }) {
                   Discount: {(order?.discount_total / 100 ?? 0).toFixed(2)}
                 </p>
                 <p className="ml-auto font-semibold">
-                  Total paid:{" "}
+                  Total:{" "}
                   <span className="uppercase">
-                    {order?.payments[0].currency_code}
+                    {order?.payments[0].currency_code}{" "}
                     {(order?.payments[0].amount / 100 ?? 0).toFixed(2)}
                   </span>{" "}
                 </p>
@@ -120,6 +124,11 @@ export function OrderPlacedEmailer({ order }: { order: Order }) {
               Your order will be delievered to:{" "}
             </p>
             <div className="text-[16px]">
+              <p>
+                {order?.shipping_address?.first_name}{" "}
+                {order?.shipping_address?.last_name}
+              </p>
+
               <p>{order?.shipping_address?.address_1}</p>
 
               {order?.shipping_address?.address_2 && (

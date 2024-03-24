@@ -102,6 +102,11 @@ export function ParcelShippedEmailer({ order }: { order: Order }) {
               Your order will be delievered to:{" "}
             </p>
             <div className="text-[16px]">
+              <p>
+                {order?.shipping_address?.first_name}{" "}
+                {order?.shipping_address?.last_name}
+              </p>
+
               <p>{order?.shipping_address?.address_1}</p>
 
               {order?.shipping_address?.address_2 && (
