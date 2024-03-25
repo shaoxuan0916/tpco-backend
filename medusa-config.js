@@ -98,9 +98,9 @@ const plugins = [
           callbackUrl: `${BACKEND_URL}/store/auth/google/cb`,
           failureRedirect: `${STORE_URL}/account`,
           successRedirect: `${STORE_URL}/account`,
-          authPath: "/store/auth/google",
-          authCallbackPath: "/store/auth/google/cb",
-          expiresIn: 24 * 60 * 60 * 1000,
+          // authPath: "/store/auth/google",
+          // authCallbackPath: "/store/auth/google/cb",
+          // expiresIn: 24 * 60 * 60 * 1000,
           // verifyCallback: (container, req, accessToken, refreshToken, profile, strict) => {
           //    // implement your custom verify callback here if you need it
           // },
@@ -118,9 +118,9 @@ const plugins = [
           callbackUrl: `${BACKEND_URL}/store/auth/facebook/cb`,
           failureRedirect: `${STORE_URL}/account`,
           successRedirect: `${STORE_URL}/account`,
-          authPath: "/store/auth/facebook",
-          authCallbackPath: "/store/auth/facebook/cb",
-          expiresIn: 24 * 60 * 60 * 1000,
+          // authPath: "/store/auth/facebook",
+          // authCallbackPath: "/store/auth/facebook/cb",
+          // expiresIn: 24 * 60 * 60 * 1000,
           // verifyCallback: (container, req, accessToken, refreshToken, profile, strict) => {
           //    // implement your custom verify callback here if you need it
           // }
